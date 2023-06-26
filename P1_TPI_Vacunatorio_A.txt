@@ -1,0 +1,158 @@
+Proceso sin_titulo
+	Definir agendaTurnos Como Logico;
+	Definir dias, horarios, eleccion, edad Como Entero;
+	Definir nombre, vacunas Como Cadena;
+	cantidad<-6;
+	Dimension vacunas[cantidad];
+	horarios<-8;
+	dias<-5;
+	
+	Dimension agendaTurnos[dias,horarios];
+	
+	Escribir "Bienvenido al centro vacunatorio Sur2";
+	Escribir "-elija una opcion para ayudarlo-";
+	Escribir "1 - Reservar turno";
+	Escribir "2 - Buscar Paciente";
+	Escribir "3 - Ver agenda vacunatorio";
+	Escribir "4 - Ordenar y mostrar lista pacientes";
+	Escribir "      a. Por edad";
+	Escribir "      b. Por vacuna a aplicar";
+	Escribir "5 - Listado/s";
+	Escribir "      a. Cantidad turnos otorgados por día";
+    Escribir "      b. Cantidad de vacunas a aplicar por vacuna";
+		
+	Leer eleccion;
+	segun eleccion
+		1:
+			inicializarAgenda(agendaTurnos,dias,horarios);
+			mostrarturnosdisponibles(agendaTurnos,dia,horario,nombre,apellido,edad);
+			escribir"ingrese el dia del turno";
+			leer dia;
+			escribir "ingrese el horario";
+			leer horario;
+		   cargarAgenda(agendaTurnos,dias,horarios,vacunas,cantidad);
+            
+		2:
+			
+			
+	FinSegun
+	fin proceso
+	subproceso cargarvacunas(vacunas,cantidad)
+		
+		vacunas[0] <- " Neumococo conjugada";
+		vacunas[1] <- " Poliomielitis (IPV o Salk)";
+	    vacunas[2] <- " Quintuple (o pentavalente)";
+	    vacunas[3] <- " Rotavirus";
+		vacunas[4] <- " Meningococo";
+		vacunas[5] <- " Triple Viral";
+		
+FinSubProceso
+subproceso inicializarAgenda(agendaTurnos,n,m)
+	agendaTurnos[dias,horarios]<-verdadero;
+	para dia<-0 hasta n-1  con paso 1 Hacer
+		para horarios<-0 hasta m-1 con paso 1 hacer
+			agendaTurnos[dia,horarios]<-Verdadero;
+		FinPara
+	FinPara
+	
+FinSubProceso
+subproceso cargarAgenda(agendaTurnos,dias,horarios,vacunas,cantidad)
+	si agendaTurnos[i,j] Entonces
+		ingresardatos(Nombre,Apellido,dni,Edad);
+		datos(Nombre,Apellido,dni,edad);
+	    elegirvacunas(vacunas,cantidad,nombre,apellido,dni,edad,dias,horarios);
+		fin si
+FinSubProceso
+
+		subproceso ingresardatos(Nombre por referencia,Apellido por referencia,dni Por Referencia,Edad por referencia)
+			escribir "ingresar nombre,apellido";
+			leer Nombre,Apellido;
+			escribir "ingrese dni";
+			leer dni;
+			repetir
+				escribir "ingrese dni:";
+				leer dni;
+				valido<-validardni(dni);
+				si no valido entonces
+					escribir "dni no es valido",dni;
+				FinSi
+			mientras que no valido
+			escribir "el dni",dni,"es vslido";
+			repetir
+				escribir "ingresar edad";
+				leer Edad;
+				si !(edad<0 o edad<110) Entonces
+					Escribir"edad fuera de los paramentro";
+				FinSi
+			hasta que  (edad<0 o edad<110)
+FinSubProceso
+funcion dnivalido<-validardni(dni)
+	definir dnivalido como logico;
+	definir dniunico como caracter;
+	dnivalido<-verdadero;
+	si longitud(dni)>=6 y Longitud(dni)<=8 entonces
+		
+		para i<-0 hasta Longitud(dni)-1 con paso 1 Hacer
+			dniunico<-subcadena(dni,i,i);
+			escribir dniunico;
+			si dniunico<>"0" y dniunico<>"1" y dniunico<>"2" y dniunico<>"3" y dniunico<>"4" y dniunico<>"5" y dniunico<>"6" y dniunico<>"7" y dniunico<>"8" y dniunico<>"9"  Entonces
+				dnivalido<-falso;
+				
+			finsi
+		finpara
+	sino
+		dnivalido<-falso;
+	finsi
+	escribir dnivalido;
+FinFuncion
+
+subproceso datos(Nombre,Apellido,dni,edad)
+	escribir "nombre:",Nombre;
+	escribir"apellido:",Apellido;
+	escribir"edad:",Edad;
+	escribir " dni",dni;
+	
+FinSubProceso
+
+	
+subproceso elegirvacunas(vacunas,cantidad,nombre,apellido,dni,edad ,dias,horarios)
+	escribir "las vacunas disponibles son:";
+	vacunas[0] <- " 1-Neumococo conjugada";
+	vacunas[1] <- " 2-Poliomielitis (IPV o Salk)";
+	vacunas[2] <- " 3-Quintuple (o pentavalente)";
+	vacunas[3] <- " 4-Rotavirus";
+	vacunas[4] <- " 5-Meningococo";
+	vacunas[5] <- " 6-Triple Viral";
+	
+	para i<-0 hasta 4  Hacer
+		escribir i+1,".",vacunas[i];
+	
+	FinPara
+	escribir "ingrese el numero de la vacuna seleccionada";
+	leer eleccion;
+	si eleccion >=1 y eleccion <=6 Entonces
+		
+		escribir "turno confirmado:";
+		escribir "dia:",dias;
+		escribir "horario",horarios;
+		escribir "nombre",nombre;
+		escribir "dni",dni;
+		escribir "edad",edad;
+		escribir "vacuna a colocar:",vacunas[eleccion-1];
+	sino 
+		escribir "eleccion incorrecta";
+	FinSi
+fin subproceso
+subproceso mostrarturnosdisponibles(agendaTurnos,dia,horario,nombre,apellido ,edad)
+	para  dia<-0 hasta 4 Hacer
+		escribir "turnos disponibles";
+		escribir "dia",dia;
+		para horario<-0 hasta  7 Hacer
+			si agendaTurnos[dia,horario] Entonces
+				escribir "horario",horario,"disponible";
+			sino 
+				escribir "horario",horario,"horario ocupado";
+			FinSi
+		FinPara
+	FinPara
+	FinSubProceso

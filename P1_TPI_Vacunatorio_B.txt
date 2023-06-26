@@ -1,0 +1,68 @@
+//A la hora de reservar turnos que muestre solamente los que están libres.
+
+Algoritmo Vacuntorio
+	
+	Definir eleccion, cantidad, dias, turnos Como Entero;
+	Definir vacunas, horarios Como Caracter;
+	Definir ocupados Como Logico;
+	cantidad <- 6;
+	dias <- 3;
+	turnos <- 3;
+	Dimension vacunas[cantidad];
+	Dimension horarios[dias,turnos];
+	Dimension ocupados[dias,turnos];
+	
+	vacunasaAAplicar(vacunas,cantidad);
+	agendaTurnos(horarios,dias,turnos);
+	llenarOcupados(ocupados,dias,turnos);
+	
+	Escribir horarios[0,2];
+	
+//	Escribir "Bienvenido al centro clandestino de la Dra.Rimolo";
+//	Escribir "Elija opción de ingreso:";
+//	Escribir "1. Reservar turno";
+//	Escribir "2. Buscar paciente";
+//	Escribir "3. Ver agenda vacunatorio";
+//	Escribir "4. Ordenar y mostrar lista pacientes";
+//	Escribir "      a. Por edad";
+//	Escribir "      b. Por vacuna a aplicar";
+//	Escribir "5. Listado/s";
+//	Escribir "      a. Cantidad turnos otorgados por día";
+//	Escribir "      b. Cantidad de vacunas a aplicar por vacuna";
+//	
+//	Leer eleccion;
+		
+FinAlgoritmo
+
+SubProceso vacunasaAAplicar(array,cantidad)
+	array[0] <- "1. Neumococo conjugada";
+	array[1] <- "2. Poliomielitis (IPV o Salk)";
+	array[2] <- "3. Quintuple (o pentavalente)";
+	array[3] <- "4. Rotavirus";
+	array[4] <- "5. Meningococo";
+	array[5] <- "6. Triple Viral";
+FinSubProceso
+
+SubProceso agendaTurnos(array,d,t)
+	array[0,0] <- "1.8:00";
+	array[0,1] <- "2.8:30";
+	array[0,2] <- "3.9:00";
+	array[1,0] <- "1.8:00";
+	array[1,1] <- "2.8:30";
+	array[1,2] <- "3.9:00";
+	array[2,0] <- "1.8:00";
+	array[2,1] <- "2.8:30";
+	array[2,2] <- "3.9:00";
+FinSubProceso
+
+SubProceso llenarOcupados(array,n,m)
+	array[0,0] <- Falso;
+	array[0,1] <- Falso;
+	array[0,2] <- Falso;
+	array[1,0] <- Falso;
+	array[1,1] <- Falso;
+	array[1,2] <- Falso;
+	array[2,0] <- Falso;
+	array[2,1] <- Falso;
+	array[2,2] <- Falso;
+FinSubProceso

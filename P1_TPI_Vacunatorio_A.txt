@@ -1,158 +1,258 @@
 Proceso sin_titulo
-	Definir agendaTurnos Como Logico;
-	Definir dias, horarios, eleccion, edad Como Entero;
-	Definir nombre, vacunas Como Cadena;
-	cantidad<-6;
-	Dimension vacunas[cantidad];
-	horarios<-8;
-	dias<-5;
+	Definir agendaTurnos como logico;
+	Definir dias, horarios, maxTurnos, numeracionTurnos, eleccion, conteoVacunas, cantidadVacunas Como Entero;
+	Definir nombresVacunas, disponibilidadAgenda, diasSemana Como Cadena;
 	
-	Dimension agendaTurnos[dias,horarios];
+	Definir nombresPacientes, apellidosPacientes, vacunasPacientes, diasPacientes, horariosPacientes, dnisPacientes como cadena;
+	Definir edadesPacientes Como Real;
 	
-	Escribir "Bienvenido al centro vacunatorio Sur2";
-	Escribir "-elija una opcion para ayudarlo-";
-	Escribir "1 - Reservar turno";
-	Escribir "2 - Buscar Paciente";
-	Escribir "3 - Ver agenda vacunatorio";
-	Escribir "4 - Ordenar y mostrar lista pacientes";
-	Escribir "      a. Por edad";
-	Escribir "      b. Por vacuna a aplicar";
-	Escribir "5 - Listado/s";
-	Escribir "      a. Cantidad turnos otorgados por día";
-    Escribir "      b. Cantidad de vacunas a aplicar por vacuna";
+	cantidadVacunas <- 6;
+	horarios <- 8;
+	dias <- 5;
+	maxTurnos <- 40;
+	numeracionTurnos <- 0;
+	
+	Dimension nombresVacunas[cantidadVacunas];
+	Dimension disponibilidadAgenda[dias,horarios];
+	Dimension diasSemana[dias];
+	Dimension agendaTurnos[dias,horarios]
+	Dimension conteoVacunascantidadVacunas
+	
+	Dimension nombresPacientes[maxTurnos];
+	Dimension apellidosPacientes[maxTurnos];
+	Dimension dnisPacientes[maxTurnos];
+	Dimension edadesPacientes[maxTurnos];
+	Dimension vacunasPacientes[maxTurnos];
+	Dimension diasPacientes[maxTurnos];
+	Dimension horariosPacientes[maxTurnos];
+	
+	inicializarAgenda(disponibilidadAgenda, agendaTurnos, semana, nombresVacunas, dias, horarios);
+	
+	Repetir
+		escribir "Bienvenido al centro vacunatorio Sur2"
+		escribir "-Elija una opcion para ayudarlo-"
+		escribir "1 - Reserva turno"
+		escribir "2 - Buscar Paciente"
+		escribir "3 - Ver agenda vacunatorio"
+		Escribir "4 - Ordenar y mostrar lista pacientes";
+		Escribir "      a. Por edad";
+		Escribir "      b. Por vacuna a aplicar";
+		Escribir "5 - Listado/s";
+		Escribir "      a. Cantidad turnos otorgados por día";
+		Escribir "      b. Cantidad de vacunas a aplicar por vacuna";
 		
-	Leer eleccion;
-	segun eleccion
-		1:
-			inicializarAgenda(agendaTurnos,dias,horarios);
-			mostrarturnosdisponibles(agendaTurnos,dia,horario,nombre,apellido,edad);
-			escribir"ingrese el dia del turno";
-			leer dia;
-			escribir "ingrese el horario";
-			leer horario;
-		   cargarAgenda(agendaTurnos,dias,horarios,vacunas,cantidad);
-            
-		2:
-			
-			
-	FinSegun
-	fin proceso
-	subproceso cargarvacunas(vacunas,cantidad)
+		Leer eleccion;
 		
-		vacunas[0] <- " Neumococo conjugada";
-		vacunas[1] <- " Poliomielitis (IPV o Salk)";
-	    vacunas[2] <- " Quintuple (o pentavalente)";
-	    vacunas[3] <- " Rotavirus";
-		vacunas[4] <- " Meningococo";
-		vacunas[5] <- " Triple Viral";
+		segun eleccion
+			1:
+				mostrarturnosdisponibles(disponibilidadAgenda, agendaTurnos, diasSemana, dias, horarios);
+				cargarAgenda(agendaTurnos, dias, horarios, nombresVacunas, cantidadVacunas, diasSemana):
+			2:
+				
+			3:
+				mostrarturnosdisponibles(disponibilidadAgenda, agendaTurnos, diasSemana, dias, horarios);
+			De Otro Modo:
+				Escribir "La opción ingresada no es correcta. Reintente";
+		FinSegun
 		
-FinSubProceso
-subproceso inicializarAgenda(agendaTurnos,n,m)
-	agendaTurnos[dias,horarios]<-verdadero;
-	para dia<-0 hasta n-1  con paso 1 Hacer
-		para horarios<-0 hasta m-1 con paso 1 hacer
-			agendaTurnos[dia,horarios]<-Verdadero;
+	Mientras Que eleccion > 0 Y eleccion < 6;
+
+subproceso inicializarAgenda(arrayH, arrayL, arrayD, arrayV, n, m)
+	arrayH[0,0] <- " 1.8:00"
+	arrayH[0,1] <- " 2.8:30"
+	arrayH[0,2] <- " 3.9:00"
+	arrayH[0,3] <- " 4.9:30"
+	arrayH[0,4] <- "5.10:00"
+	arrayH[0,5] <- "6.10:30"
+	arrayH[0,6] <- "7.11:00"
+	arrayH[0,7] <- "8.11:30"
+	arrayH[1,0] <- " 1.8:00"
+	arrayH[1,1] <- " 2.8:30"
+    arrayH[1,2] <- " 3.9:00"
+	arrayH[1,3] <- " 4.9:30"
+	arrayH[1,4] <- "5.10:00"
+	arrayH[1,5] <- "6.10:30"
+	arrayH[1,6] <- "7.11:00"
+	arrayH[1,7] <- "8.11:30"
+	arrayH[2,0] <- " 1.8:00"
+    arrayH[2,1] <- " 2.8:30"
+	arrayH[2,2] <- " 3.9:00"
+	arrayH[2,3] <- " 4.9:30"
+	arrayH[2,4] <- "5.10:00"
+	arrayH[2,5] <- "6.10:30"
+	arrayH[2,6] <- "7.11:00"
+	arrayH[2,7] <- "8.11:30"
+	arrayH[3,0] <- " 1.8:00"
+    arrayH[3,1] <- " 2.8:30"
+	arrayH[3,2] <- " 3.9:00"
+	arrayH[3,3] <- " 4.9:30"
+	arrayH[3,4] <- "5.10:00"
+	arrayH[3,5] <- "6.10:30"
+	arrayH[3,6] <- "7.11:00"
+	arrayH[3,7] <- "8.11:30"
+	arrayH[4,0] <- " 1.8:00"
+    arrayH[4,1] <- " 2.8:30"
+	arrayH[4,2] <- " 3.9:00"
+	arrayH[4,3] <- " 4.9:30"
+	arrayH[4,4] <- "5.10:00"
+	arrayH[4,5] <- "6.10:30"
+	arrayH[4,6] <- "7.11:00"
+	arrayH[4,7] <- "8.11:30"
+	
+	arrayD[0] <- "Lunes"
+	arrayD[1] <- "Martes"
+	arrayD[2] <- "Miercoles"
+	arrayD[3] <- "Jueves"
+	arrayD[4] <- "Viernes"
+	
+	arrayV[0] <- "Neumococo conjugada";
+	arrayV[1] <- "Poliomielitis (IPV o Salk)";
+	arrayV[2] <- "Quintuple (o pentavalente)";
+	arrayV[3] <- "Rotavirus";
+	arrayV[4] <- "Meningococo";
+	arrayV[5] <- "Triple Viral";
+	
+	para i<-0 hasta n-1 con paso 1 Hacer
+		para j<-0 hasta m-1 con paso 1 hacer
+			arrayL[i,j] <- Verdadero
 		FinPara
 	FinPara
 	
 FinSubProceso
-subproceso cargarAgenda(agendaTurnos,dias,horarios,vacunas,cantidad)
-	si agendaTurnos[i,j] Entonces
-		ingresardatos(Nombre,Apellido,dni,Edad);
-		datos(Nombre,Apellido,dni,edad);
-	    elegirvacunas(vacunas,cantidad,nombre,apellido,dni,edad,dias,horarios);
+
+subproceso cargarAgenda(arrayL, n, m, arrayV, c, arrayD)
+	Definir dia, horario Como Entero;
+	Definir continuar Como Caracter;
+	
+	Repetir
+		Escribir "";
+		
+		Repetir
+			Escribir "Ingrese el dia del turno"
+			Para i<-0 Hasta n-1 Con Paso 1 Hacer
+				Escribir i+1, " - ", arrayD[i];
+			Fin Para
+			Escribir Sin Saltar "Opción: ";
+			Leer dia;
+			Si dia < 1 O dia > 5 Entonces
+				Escribir "La opción ingresada no es válida, reintente";
+			Fin Si
+		Mientras Que dia < 1 O dia > 5
+		
+		Repetir
+			Escribir "Ingrese un horario disponible: "
+			Leer horario
+			Si horario < 1 O horario > 8 Entonces
+				Escribir "La opción ingresada no es válida, reintente";
+			Fin Si
+		Mientras Que horario < 1 O horario > 8;
+		
+		si arrayL[dia-1,horario-1] Entonces
+			ingresardatos(nombre, apellido, dni, edad)
+			mostrarDatos(nombre, apellido, dni, edad)
+			elegirvacunas(vacunas,cantidad,nombre,apellido,dni,edad,dias,horarios)
+			arrayL[dia-1,horario-1] <- Falso;
+		sino 
+			escribir "Turno ocupado";
 		fin si
+		
+		Repetir
+			escribir "¿Desea cargar otro turno? (si/no)";
+			leer continuar;
+			Si Mayusculas(continuar) <> "SI" Y Mayusculas(continuar) <> "NO" Entonces
+				escribir "La opción ingresada es inválida, reintente";
+			Fin Si
+		Mientras Que Mayusculas(continuar) <> "SI" Y Mayusculas(continuar) <> "NO";
+	mientras que Mayusculas(continuar) == "SI";
 FinSubProceso
 
-		subproceso ingresardatos(Nombre por referencia,Apellido por referencia,dni Por Referencia,Edad por referencia)
-			escribir "ingresar nombre,apellido";
-			leer Nombre,Apellido;
-			escribir "ingrese dni";
-			leer dni;
-			repetir
-				escribir "ingrese dni:";
-				leer dni;
-				valido<-validardni(dni);
-				si no valido entonces
-					escribir "dni no es valido",dni;
-				FinSi
-			mientras que no valido
-			escribir "el dni",dni,"es vslido";
-			repetir
-				escribir "ingresar edad";
-				leer Edad;
-				si !(edad<0 o edad<110) Entonces
-					Escribir"edad fuera de los paramentro";
-				FinSi
-			hasta que  (edad<0 o edad<110)
+subproceso ingresardatos(nombre por referencia, apellido por referencia, dni Por Referencia, Edad por referencia)
+	Definir valido Como Logico;
+	
+	escribir "Ingrese su nombre:";
+	leer nombre;
+	escribir "Ingrese su apellido:";
+	leer apellido;
+			
+	repetir
+		escribir "Ingrese su DNI:";
+		leer dni;
+		valido <- validardni(dni);
+		si no valido entonces
+			escribir "El DNI ingresado no es válido";
+		FinSi
+	mientras que no valido;
+	repetir
+		escribir "Ingrese su edad:";
+		leer edad;
+		si edad<0 O edad>110 Entonces
+			Escribir"edad fuera de los paramentros"
+		FinSi
+	Mientras que edad<0 O edad>110;
 FinSubProceso
+
 funcion dnivalido<-validardni(dni)
-	definir dnivalido como logico;
-	definir dniunico como caracter;
-	dnivalido<-verdadero;
-	si longitud(dni)>=6 y Longitud(dni)<=8 entonces
-		
+	definir dnivalido como logico
+	definir dniunico como caracter
+	dnivalido<-verdadero
+	si longitud(dni)>=7 y longitud(dni)<=8 entonces
 		para i<-0 hasta Longitud(dni)-1 con paso 1 Hacer
-			dniunico<-subcadena(dni,i,i);
-			escribir dniunico;
-			si dniunico<>"0" y dniunico<>"1" y dniunico<>"2" y dniunico<>"3" y dniunico<>"4" y dniunico<>"5" y dniunico<>"6" y dniunico<>"7" y dniunico<>"8" y dniunico<>"9"  Entonces
-				dnivalido<-falso;
-				
+			dniunico<-subcadena(dni,i,i)
+			escribir dniunico
+			si dniunico<>"0" y dniunico<>"1" y dniunico<>"2" y dniunico<>"3" y dniunico<>"4" y dniunico<>"5" y dniunico<>"6" y dniunico<>"7" y dniunico<>"8" y dniunico<>"9" Entonces
+				dnivalido<-falso
 			finsi
 		finpara
 	sino
-		dnivalido<-falso;
+		dnivalido<-falso
 	finsi
-	escribir dnivalido;
 FinFuncion
 
-subproceso datos(Nombre,Apellido,dni,edad)
-	escribir "nombre:",Nombre;
-	escribir"apellido:",Apellido;
-	escribir"edad:",Edad;
-	escribir " dni",dni;
-	
+subproceso mostrarDatos(n, a, dni, edad)
+	escribir "Nombre:", n;
+	escribir "Apellido:", a;
+	escribir "Edad:", edad;
+	escribir "DNI", dni;
 FinSubProceso
 
+subproceso elegirvacunas(arrayV, cant, nombre, apellido, dni, edad, dias, horarios)
+	Definir eleccion Como Entero;
 	
-subproceso elegirvacunas(vacunas,cantidad,nombre,apellido,dni,edad ,dias,horarios)
-	escribir "las vacunas disponibles son:";
-	vacunas[0] <- " 1-Neumococo conjugada";
-	vacunas[1] <- " 2-Poliomielitis (IPV o Salk)";
-	vacunas[2] <- " 3-Quintuple (o pentavalente)";
-	vacunas[3] <- " 4-Rotavirus";
-	vacunas[4] <- " 5-Meningococo";
-	vacunas[5] <- " 6-Triple Viral";
-	
-	para i<-0 hasta 4  Hacer
-		escribir i+1,".",vacunas[i];
-	
+	Escribir "Seleccione la vacuna a aplicar:"
+	para i<-0 hasta cant-1 Con Paso 1 Hacer
+		escribir i+1," - ", arrayV[i];
 	FinPara
-	escribir "ingrese el numero de la vacuna seleccionada";
+	
+	Escribir Sin Saltar "Elección: ";
 	leer eleccion;
+	
 	si eleccion >=1 y eleccion <=6 Entonces
 		
-		escribir "turno confirmado:";
-		escribir "dia:",dias;
-		escribir "horario",horarios;
-		escribir "nombre",nombre;
-		escribir "dni",dni;
-		escribir "edad",edad;
-		escribir "vacuna a colocar:",vacunas[eleccion-1];
+		escribir "turno confirmado:"
+		escribir "dia:",dias
+		escribir "horario",horarios
+		escribir "nombre",nombre
+		escribir "dni",dni
+		escribir "edad",edad
+		escribir "vacuna a colocar:",vacunas[eleccion-1]
 	sino 
-		escribir "eleccion incorrecta";
+		escribir "eleccion incorrecta"
 	FinSi
 fin subproceso
-subproceso mostrarturnosdisponibles(agendaTurnos,dia,horario,nombre,apellido ,edad)
-	para  dia<-0 hasta 4 Hacer
-		escribir "turnos disponibles";
-		escribir "dia",dia;
-		para horario<-0 hasta  7 Hacer
-			si agendaTurnos[dia,horario] Entonces
-				escribir "horario",horario,"disponible";
-			sino 
-				escribir "horario",horario,"horario ocupado";
-			FinSi
+
+subproceso mostrarTurnosDisponibles(arrayH, arrayL, arrayD, n, m)
+	Escribir "";
+	escribir "Turnos disponibles:";
+	para i<-0 hasta n-1 Hacer
+		Escribir arrayD[i];
+		para j<-0 hasta m-1 Hacer
+			Si arrayL[i,j] == Verdadero Entonces
+				Escribir sin saltar arrayH[i,j],"   ";
+			SiNo
+				Escribir sin saltar "         ";
+			Fin Si
 		FinPara
+		Escribir "";
 	FinPara
-	FinSubProceso
+FinSubProceso
+	

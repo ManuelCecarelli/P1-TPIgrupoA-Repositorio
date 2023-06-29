@@ -1,7 +1,3 @@
-// verificar que no se pueda ingresar más turnos si la grilla ya se encuentra llena.
-// agregar las funcionalidades de las consignas 4 y 5.
-// recordr mostrar un mensaje de despedida al cerrar el programa.
-
 Algoritmo Vacunatorio
 	
 	//variables p/datos del sistema
@@ -41,7 +37,7 @@ Algoritmo Vacunatorio
 	
 	Repetir
 		Limpiar Pantalla;
-		Escribir "Bienvenido al centro vacunatorio Sur2";
+		Escribir "*****Bienvenido al centro vacunatorio Sur2*****";
 		Escribir "-Ingrese el N° de la opción deseada, o ingrese SALIR para cerrar la aplicación-";
 		Escribir "1 - Reserva turno";
 		Escribir "2 - Buscar Paciente";
@@ -163,6 +159,8 @@ Algoritmo Vacunatorio
 			FinSegun
 		Fin Si
 	Mientras Que Mayusculas(eleccion) <> "SALIR";
+	
+	Escribir "****** Operacion finalizada-hasta luego*********"
 	
 FinAlgoritmo
 
@@ -344,10 +342,16 @@ Funcion valido <- ingresardatos(arrayPacientes, num)
 			Leer arrayPacientes[num,3];
 			
 			Para i<-0 Hasta longitud(arrayPacientes[num,3])-1 Con Paso 1 Hacer
-				digito <- subcadena(arrayPacientes[num,3],i,i)
-				Si digito <> "0" Y digito <> "1" Y digito <> "2" Y digito <> "3" Y digito <> "4" Y digito <> "5" Y digito <> "6" Y digito <> "7" Y digito <> "8" Y digito <> "9" Entonces
-					valido <- Falso;
-					//digito <> "." Y 
+				digito <- subcadena(arrayPacientes[num,3],i,i);
+				Si i == 1 Entonces
+					Si digito <> "0" Y digito <> "1" Y digito <> "."  Y digito <> "2" Y digito <> "3" Y digito <> "4" Y digito <> "5" Y digito <> "6" Y digito <> "7" Y digito <> "8" Y digito <> "9" Entonces
+						valido <- Falso;
+					FinSi
+				SiNo
+					Si digito <> "0" Y digito <> "1" Y digito <> "2" Y digito <> "3" Y digito <> "4" Y digito <> "5" Y digito <> "6" Y digito <> "7" Y digito <> "8" Y digito <> "9" Entonces
+						valido <- Falso;
+					FinSi
+					
 				FinSi
 			FinPara
 			
@@ -391,8 +395,9 @@ SubProceso mostrarDatos(arrayPacientes,num)
 FinSubProceso
 
 Funcion bandera <- elegirVacunas(arrayV, cant, arrayPacientes, num Por Referencia)
-	Definir eleccion, aux Como Entero;
+	Definir aux Como Entero;
 	Definir bandera Como Logico;
+	Definir eleccion Como Cadena;
 	
 	bandera <- Falso;
 	
@@ -401,26 +406,25 @@ Funcion bandera <- elegirVacunas(arrayV, cant, arrayPacientes, num Por Referenci
 		Para i<-0 hasta cant-1 Con Paso 1 Hacer
 			escribir i+1," - ", arrayV[i,0];
 		FinPara
-		
 		Escribir Sin Saltar "Elección: ";
 		leer eleccion;
-		
-		Si eleccion >= 1 y eleccion <= 6 Entonces
-			Si ConvertirANumero(arrayV[eleccion-1,1]) > 0 Entonces
-				aux <- ConvertirANumero(arrayV[eleccion-1,1]);
-				aux <- aux - 1;
-				arrayV[eleccion-1,1] <- ConvertirATexto(aux);
-				Escribir "Vacuna a colocar: ", arrayV[eleccion-1,0];
-				arrayPacientes[num,4] <- arrayV[eleccion-1,0];
-				bandera <- Verdadero;
-			SiNo
-				Escribir "Sin stock";
-				
-			FinSi
-		SiNo 
-			escribir "Eleccion incorrecta";
-		FinSi
-	Mientras Que eleccion < 1 O eleccion > 6;
+		Segun eleccion Hacer
+			"1","2","3","4","5","6":
+				Si ConvertirANumero(arrayV[ConvertirANumero(eleccion)-1,1]) > 0 Entonces
+					aux <- ConvertirANumero(arrayV[ConvertirANumero(eleccion)-1,1]);
+					aux <- aux - 1;
+					arrayV[ConvertirANumero(eleccion)-1,1] <- ConvertirATexto(aux);
+					Escribir "Vacuna a colocar: ", arrayV[ConvertirANumero(eleccion)-1,0];
+					arrayPacientes[num,4] <- arrayV[ConvertirANumero(eleccion)-1,0];
+					bandera <- Verdadero;
+				SiNo
+					Escribir "Sin stock";
+					bandera <- Verdadero;
+				FinSi
+			De Otro Modo:
+				Escribir "Eleccion incorrecta";
+		Fin Segun
+	Mientras Que bandera == Falso;
 FinFuncion
 
 subproceso mostrarTurnosDisponibles(arrayH, arrayL, arrayD, n, m)
@@ -556,4 +560,3 @@ SubProceso mostrarListaPacientesVacuna(arrayPacientes, n, m, aux)
 		Escribir "No hay turnos reservados para esa vacuna";
 	Fin Si
 FinSubProceso
-	
